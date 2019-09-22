@@ -1,0 +1,113 @@
+<div class="modal-dialog modal-dialog-scrollable" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalScrollableTitle">Add Property</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+<div class="modal-body">
+<form [formGroup]="addPropertyForm">
+    <div class="form-group">
+      <div class="row">
+        <div class="col-md-6">
+          <label>Header_name</label>
+          <input type="text" class="form-control" name="input" placeholder="Header" formControlName="header_name">
+        </div>
+        <div class="col-md-6">
+          <label>Type</label>
+          <select class="form-control" id="type" formControlName="type" >
+            <option *ngFor="let c of categories">{{c}}</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label>Paiement By :</label>
+          <select class="form-control" formControlName="typeOfPaiement">
+            <option>Week</option>
+            <option>Day</option>
+            <option>Month</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label>Price</label>
+          <input type="number" class="form-control" name="input" placeholder="Price" formControlName="price">
+        </div>
+        <div class="col-md-6">
+          <label>Surface (m²)</label>
+          <input type="number" class="form-control" name="input" placeholder="Surface" formControlName="surface">
+        </div>
+
+        <div class="col-md-6">
+          <label>Number of rooms</label>
+          <input type="number" class="form-control" name="input" placeholder="number_of_rooms" formControlName="rooms_number">
+        </div>
+
+        <div class="col-md-6">
+          <label>Number of Bathrooms</label>
+          <input type="number" class="form-control" name="input" placeholder="number_of_bathrooms" formControlName="bathrooms_number">
+        </div>
+
+        <div class="col-md-6">
+          <label>Number of Garages</label>
+          <input type="number" class="form-control" name="input" placeholder="number_of_garages" formControlName="garage_number">
+        </div>
+
+        <div class="col-md-6">
+          <label>Address</label>
+          <input type="text" class="form-control" name="input" placeholder="adress" formControlName="address">
+        </div>
+
+        <div class="col-md-6">
+          <label>Age</label>
+          <input type="number" class="form-control" name="input" placeholder="age" formControlName="age">
+        </div>
+
+        <div class="col-md-6">
+          <label>City</label>
+          <select class="form-control"  formControlName="city">
+            <option *ngFor="let citie of cities">{{citie.name}}</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label>Description</label>
+          <textarea class="form-control" formControlName="description"></textarea>
+        </div>
+
+        <div class="col-md-6">
+          <label>Photos (at least one) </label>
+          <small style="color: gainsboro"></small>
+          <img src="assets/img/add.png" (click)="onAddPhoto()" style="cursor: pointer">
+          <input class="form-control" formControlName="im" type="file">
+        </div>
+
+        <div class="col-md-6">
+          <label>Property Details</label>
+          <div *ngFor="let p of proprety_details">
+            <input type="checkbox"
+                   value="{{p}}"
+                   (change)="onCheckboxChange(p,$event)"
+            > {{p}}
+          </div>
+        </div>
+      </div>
+
+    <div class="col-md-8" formArrayName="photos">
+      <div
+        *ngFor="let p of addPropertyForm.get('photos').controls; let i=index"
+        [formGroupName]="i"
+        class="row">
+        <input class="form-control col-md-6" type="file" formControlName="photo">
+        <div class="col-md-2">
+          <img src="assets/img/close.png" (click)="onDeletePhoto(i)" style="cursor: pointer">
+        </div>
+      </div>
+    </div>
+    </div>
+</form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+  <button type="submit" class="btn btn-primary" (click)="onClickCreate()"  data-dismiss="modal">Create</button>
+</div>
+  </div>
+</div>

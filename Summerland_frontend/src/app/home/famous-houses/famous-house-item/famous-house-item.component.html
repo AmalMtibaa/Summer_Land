@@ -1,0 +1,12 @@
+
+  <div class="propertie-item set-bg x" (click)="onClickHouse()"
+       [style.background]="'url(../../../assets/my_img/' + house.pathimage + ')'" [style.background-size]="cover">
+    <div class="sale-notic">{{house.typeOfPaiement}}</div>
+    <div class="propertie-info text-white">
+      <div class="info-warp">
+        <h5>{{house.address}}</h5>
+        <p><i class="fa fa-map-marker"></i> {{house.place['name']}}</p>
+      </div>
+      <div class="price">{{house.price}} dt</div>
+    </div>
+  </div>

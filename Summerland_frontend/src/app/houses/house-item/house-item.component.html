@@ -1,0 +1,34 @@
+<!-- feature -->
+  <div class="feature-item" style="cursor: pointer" (click)="onClickHouse(house.id)">
+    <div class="feature-pic set-bg"
+         [style.background]="'url(../../../assets/my_img/' + house.pathimage + ')'"
+         [style.background-size]="cover">
+      <div class="sale-notic">BY {{house.typeOfPaiement}}</div>
+    </div>
+    <div class="feature-text">
+      <div class="text-center feature-title">
+        <h5>{{house.header_name}}</h5>
+        <p><i class="fa fa-map-marker"></i> {{house.address}}</p>
+      </div>
+      <div class="room-info-warp">
+        <div class="room-info">
+          <div class="rf-left">
+            <p><i class="fa fa-th-large"></i> {{house.surface}} m²</p>
+            <p><i class="fa fa-bed"></i> {{house.rooms_number}} rooms</p>
+          </div>
+          <div class="rf-right">
+            <p><i class="fa fa-car"></i> {{house.garage_number}} Garages</p>
+            <p><i class="fa fa-bath"></i> {{house.bathrooms_number}} Bathrooms</p>
+          </div>
+        </div>
+        <div class="room-info">
+          <div class="rf-left">
+            <p><i class="fa fa-user"></i> {{house["owner"]["name"]}} {{house["owner"]["lastname"]}}</p>
+          </div>
+        </div>
+      </div>
+      <a  class="text-white room-price"><b>{{house.price}} dt</b></a>
+    </div>
+  </div>
+
+

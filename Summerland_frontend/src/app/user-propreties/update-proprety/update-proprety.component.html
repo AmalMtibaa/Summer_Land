@@ -1,0 +1,107 @@
+<section class="page-top-section set-bg" style="background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ),url('../../../../assets/img/welcome.jpg'); background-size: cover;">
+  <div class="container text-white">
+    <h2>house details</h2>
+  </div>
+</section>
+
+<!-- Breadcrumb -->
+<div class="site-breadcrumb">
+  <div class="container">
+    <a href=""><i class="fa fa-home"></i>Home</a>&nbsp;
+    <a href=""><i class="fa fa-angle-right"></i>Houses</a>
+    <span><i class="fa fa-angle-right"></i>House details</span>
+  </div>
+</div>
+
+<section class="page-section">
+  <div class="container">
+    <button style="float: right;" class="btn btn-danger">Delete Property</button>
+    <div class="row">
+      <div class="col-lg-12 single-list-page">
+        <h3 class="text-info">Principal Photo</h3><br>
+        <div class="row">
+          <div class="col-md-12">
+            <img class="x" src="../assets/my_img/{{house.pathimage}}">
+            <input type="file" class="form-control"><br>
+          </div>
+        </div>
+
+        <h4 class="text-info">OtherPhotos</h4><br>
+        <div class="row">
+          <div class="col-md-3" *ngFor="let photo of house.pathimages">
+            <img class="s" src="../assets/my_img/{{photo}}">
+            <input type="file" class="form-control">
+          </div>
+        </div>
+
+
+        <div class="single-list-content">
+          <form [formGroup]="updatePropertyForm">
+          <div class="row">
+
+            <div class="col-xl-8 sl-title">
+              <label class="text-secondary">header name</label>
+              <input class="form-control" type="text" formControlName="header_name">
+              <label class="text-secondary">Address</label>
+                <input class="form-control" type="text" formControlName="address">
+            </div>
+            <div class="col-xl-4">
+              <label class="text-secondary">Price (dt) / {{house.typeOfPaiement}}</label>
+                <input class="form-control" type="number" formControlName="price">
+            </div>
+          </div>
+
+          <div class="row property-details-list">
+            <div class="col-md-4 col-sm-6">
+              <p><i class="fa fa-th-large"></i>
+                <label class="text-secondary">Surface(m²)</label>
+                <input class="form-control" type="number" formControlName="surface"></p>
+              <p><i class="fa fa-bed"></i>
+                <label class="text-secondary">Bedrooms</label>
+                <input class="form-control" type="number" formControlName="rooms_number"></p>
+            </div>
+            <div class="col-md-4 col-sm-6">
+              <p><i class="fa fa-car"></i>
+                <label class="text-secondary">Garages</label>
+                <input class="form-control" type="number" formControlName="garage_number"></p>
+              <p><i class="fa fa-building-o"></i>
+                <label class="text-secondary">Type</label>
+                <select class="form-control" id="type" formControlName="type" >
+                  <option *ngFor="let c of categories">{{c}}</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+              <p><i class="fa fa-bath"></i>
+                <label class="text-secondary">Bathrooms</label>
+                <input class="form-control" type="number" formControlName="bathrooms_number"></p>
+              <p><i class="fa fa-trophy"></i>
+                <label class="text-secondary">Age</label>
+                <input class="form-control" type="number" formControlName="age"></p>
+            </div>
+          </div>
+          <h3 class="sl-sp-title">Description</h3>
+          <div class="description">
+            <p><textarea class="form-control" formControlName="description"></textarea></p>
+          </div>
+          <h3 class="sl-sp-title">Property Details</h3>
+          <div class="row property-details-list">
+            <div class="col-md-4 col-sm-6" *ngFor="let x of house.details">
+              <p><i class="fa fa-check-circle-o"></i>
+                <input type="checkbox"
+                       value="{{x}}"
+                       (change)="onCheckboxChange(x,$event)"
+                       checked
+              > {{x}}</p>
+            </div>
+          </div>
+          <button style="float: right;" class="btn btn-primary">Update</button>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+
+</section>

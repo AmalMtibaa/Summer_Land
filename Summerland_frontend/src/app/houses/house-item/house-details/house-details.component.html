@@ -1,0 +1,158 @@
+<section class="page-top-section set-bg" style="background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ),url('../../../../assets/img/welcome.jpg'); background-size: cover;">
+  <div class="container text-white">
+    <h2>house details</h2>
+  </div>
+</section>
+
+<!-- Breadcrumb -->
+<div class="site-breadcrumb">
+  <div class="container">
+    <a href=""><i class="fa fa-home"></i>Home</a>&nbsp;
+    <a href=""><i class="fa fa-angle-right"></i>Houses</a>
+    <span><i class="fa fa-angle-right"></i>House details</span>
+  </div>
+</div>
+
+<!-- Page -->
+<section class="page-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 single-list-page">
+
+      <div class="single-list-slider owl-carousel" id="sl-slider">
+        <div class="sl-item set-bg"
+             [style.background]="'url(../../../assets/my_img/' + house.pathimage + ')'" [style.background-size]="cover">
+          <div class="rent-notic">{{house.typeOfPaiement}}</div>
+        </div>
+        <div *ngFor="let m1 of house.pathimages">
+        <div class="sl-item set-bg"
+             [style.background]="'url(../../../../assets/my_img/' + m1 + ')'"
+             [style.background-size]="cover">
+          <div class="rent-notic">By {{house.typeOfPaiement}}</div>
+        </div>
+        </div>
+      </div>
+
+      <div class="owl-carousel sl-thumb-slider" id="sl-slider-thumb">
+        <div class="sl-thumb set-bg"
+             [style.background]="'url(../../../assets/my_img/' + house.pathimage + ')'"
+             [style.background-size]="cover">
+        </div>
+       <div *ngFor="let m of house.pathimages">
+         <div class="sl-thumb set-bg"
+              [style.background]="'url(../../../../assets/my_img/' + m + ')'"
+              [style.background-size]="cover">
+         </div>
+       </div>
+      </div>
+
+      <div class="single-list-content">
+        <div class="row">
+          <div class="col-xl-8 sl-title">
+            <h2>{{house.header_name}}</h2>
+            <p><i class="fa fa-map-marker"></i>{{house.address}} + {{house.place.name}} </p>
+          </div>
+          <div class="col-xl-4">
+            <a class="price-btn text-white">{{house.price}} dt</a>
+          </div>
+        </div>
+
+        <div class="row">
+          <h3 class="col-md-7 sl-sp-title">Property Details</h3>
+          <div class="col-md-4 rate">
+            <input type="radio" id="star5" name="rate" value="5" />
+            <label for="star5" title="text">5 stars</label>
+            <input type="radio" id="star4" name="rate" value="4" />
+            <label for="star4" title="text">4 stars</label>
+            <input type="radio" id="star3" name="rate" value="3" />
+            <label for="star3" title="text">3 stars</label>
+            <input type="radio" id="star2" name="rate" value="2" />
+            <label for="star2" title="text">2 stars</label>
+            <input type="radio" id="star1" name="rate" value="1" />
+            <label for="star1" title="text">1 star</label>
+          </div>
+        </div>
+        <div class="row property-details-list">
+          <div class="col-md-4 col-sm-6">
+            <p><i class="fa fa-th-large"></i> {{house.surface}} m²</p>
+            <p><i class="fa fa-bed"></i> {{house.rooms_number}} Bedrooms</p>
+          </div>
+          <div class="col-md-4 col-sm-6">
+            <p><i class="fa fa-car"></i> {{house.garage_number}} Garages</p>
+            <p><i class="fa fa-building-o"></i> {{house.type}}</p>
+          </div>
+          <div class="col-md-4">
+            <p><i class="fa fa-bath"></i> {{house.bathrooms_number}} Bathrooms</p>
+            <p><i class="fa fa-trophy"></i> {{house.age}} years age</p>
+          </div>
+        </div>
+        <h3 class="sl-sp-title">Description</h3>
+        <div class="description">
+          <p>{{house.description}}</p>
+        </div>
+        <h3 class="sl-sp-title">Property Details</h3>
+        <div class="row property-details-list">
+        <div class="col-md-4 col-sm-6" *ngFor="let x of house.details">
+            <p><i class="fa fa-check-circle-o"></i> {{x}}</p>
+        </div>
+        </div>
+
+        <h3 class="sl-sp-title bd-no">Location</h3>
+        <div class="pos-map" id="map-canvas"></div>
+      </div>
+    </div>
+
+      <!-- sidebar -->
+      <div class="col-lg-4 col-md-7 sidebar">
+        <div class="author-card">
+          <div class="author-img set-bg" style="background: url('../../../../assets/img/author.jpg'); background-size: cover;"></div>
+          <div class="author-info">
+            <h5>{{house.owner.name}} {{house.owner.lastname}}</h5>
+            <p>{{house.owner.address}}</p>
+          </div>
+          <div class="author-contact">
+            <p><i class="fa fa-phone"></i>{{house.owner.telephone}}</p>
+            <p><i class="fa fa-envelope"></i>{{house.owner.email}}</p>
+          </div>
+        </div>
+        <div class="contact-form-card">
+          <p>Want to Ask Reservation ? View the Calendar to choose the period you want</p>
+          <button class="col-lg-12 col-md-7"  (click)="onClickCalandar()">View Calendar</button>
+        </div>
+        <div class="contact-form-card">
+          <h5>Do you have any question?</h5>
+          <form>
+            <input type="text" placeholder="Your name">
+            <input type="text" placeholder="Your email">
+            <textarea placeholder="Your question"></textarea>
+            <button>SEND</button>
+          </form>
+        </div>
+
+        <div class="related-properties">
+          <h2>Related Property</h2>
+          <div class="rp-item">
+            <div class="rp-pic set-bg" style="background: url('../../../../assets/img/feature/1.jpg'); background-size: cover;">
+              <div class="sale-notic">FOR SALE</div>
+            </div>
+            <div class="rp-info">
+              <h5>1963 S Crescent Heights Blvd</h5>
+              <p><i class="fa fa-map-marker"></i>Los Angeles, CA 90034</p>
+            </div>
+            <a href="#" class="rp-price">$1,200,000</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+</section>
+
+
+<!-- Page end -->
+
+
+
+

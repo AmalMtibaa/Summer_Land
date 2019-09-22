@@ -1,0 +1,283 @@
+<section class="page-top-section set-bg" style="background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ),url('../../../../assets/img/welcome.jpg'); background-size: cover;">
+  <div class="container text-white">
+    <h2>house details</h2>
+  </div>
+</section>
+
+<!-- Breadcrumb -->
+<div class="site-breadcrumb">
+  <div class="container">
+    <a href=""><i class="fa fa-home"></i>Home</a>&nbsp;
+    <a href=""><i class="fa fa-angle-right"></i>Houses</a>
+    <a href=""><i class="fa fa-angle-right"></i>House-details</a>
+    <span><i class="fa fa-angle-right"></i>Calendar</span>
+  </div>
+</div>
+<section class="page-section">
+  <div class="container">
+<button *ngIf="role=='customer'" class="btn btn-info x" data-toggle="modal" data-target="#reservationModal">Request a Reservation </button>
+<div class="row text-center">
+  <div class="col-md-4">
+    <div class="btn-group">
+      <div
+        class="btn btn-primary"
+        mwlCalendarPreviousView
+        [view]="view"
+        [(viewDate)]="viewDate"
+        (viewDateChange)="closeOpenMonthViewDay()"
+      >
+        Previous
+      </div>
+      <div
+        class="btn btn-outline-secondary"
+        mwlCalendarToday
+        [(viewDate)]="viewDate"
+      >
+        Today
+      </div>
+      <div
+        class="btn btn-primary"
+        mwlCalendarNextView
+        [view]="view"
+        [(viewDate)]="viewDate"
+        (viewDateChange)="closeOpenMonthViewDay()"
+      >
+        Next
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+  </div>
+</div>
+<br />
+<div [ngSwitch]="view">
+  <mwl-calendar-month-view
+    *ngSwitchCase="CalendarView.Month"
+    [viewDate]="viewDate"
+    [events]="events"
+    [refresh]="refresh"
+    [activeDayIsOpen]="activeDayIsOpen"
+    (dayClicked)="dayClicked($event.day)"
+    (eventClicked)="handleEvent('Clicked', $event.event)"
+    (eventTimesChanged)="eventTimesChanged($event)"
+  >
+  </mwl-calendar-month-view>
+  <mwl-calendar-week-view
+    *ngSwitchCase="CalendarView.Week"
+    [viewDate]="viewDate"
+    [events]="events"
+    [refresh]="refresh"
+    (eventClicked)="handleEvent('Clicked', $event.event)"
+    (eventTimesChanged)="eventTimesChanged($event)"
+  >
+  </mwl-calendar-week-view>
+  <mwl-calendar-day-view
+    *ngSwitchCase="CalendarView.Day"
+    [viewDate]="viewDate"
+    [events]="events"
+    [refresh]="refresh"
+    (eventClicked)="handleEvent('Clicked', $event.event)"
+    (eventTimesChanged)="eventTimesChanged($event)"
+  >
+  </mwl-calendar-day-view>
+</div>
+
+<!-- Edit Calendar-->
+
+<br /><br /><br />
+<div *ngIf="role=='owner' && reservation_requests!=[]>0;else x">
+  <h3> Evaluate Reservation Requests</h3>
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
+      <tr>
+        <th>Reservation ID</th>
+        <th>Customer </th>
+        <th>Starts at</th>
+        <th>Ends at</th>
+        <th>Accept</th>
+        <th>Remove</th>
+        <th>Message</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr *ngFor="let event of reservation_requests;let i=index">
+        <td>{{i+1}}</td>
+        <td>
+          {{event.customer['name']}} {{event.customer['lastname']}}
+        </td>
+        <td>
+          {{event.date_debut| date:longDate}}
+        </td>
+        <td>
+          {{event.date_fin| date:longDate}}
+        </td>
+        <td>
+          <button class="btn btn-success" (click)="onAccept(event.id)">
+            Accept
+          </button>
+        </td>
+        <td>
+          <button class="btn btn-danger" (click)="onRefuse(event.id)">
+            Refuse
+          </button>
+        </td>
+        <td>
+          <button class="btn btn-warning" (click)="onMessage(event)">
+            Message
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+    <ng-template #x>
+      <div class="alert alert-success" role="alert">
+        You don't have any reservation request right now !<br>
+        We will notify when you have new requests.
+      </div>
+    </ng-template>
+<br>
+<div *ngIf="role=='owner'">
+<h3>
+  Edit Calendar
+  <button class="btn btn-primary pull-right" (click)="addEvent()">
+    Add Reservation
+  </button>
+  <div class="clearfix"></div>
+</h3>
+
+<div class="table-responsive">
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th>Title</th>
+      <th>color</th>
+      <th>Starts at</th>
+      <th>Ends at</th>
+      <th>Remove</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr *ngFor="let event of events">
+      <td>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="event.title"
+          (keyup)="refresh.next()"
+        />
+      </td>
+      <td>
+        <input
+          type="color"
+          [(ngModel)]="event.color.primary"
+          (change)="refresh.next()"
+        />
+      </td>
+      <td>
+        <input
+          class="form-control"
+          type="text"
+          mwlFlatpickr
+          [(ngModel)]="event.start"
+          (ngModelChange)="refresh.next()"
+          [altInput]="true"
+          [convertModelValue]="true"
+          [enableTime]="true"
+          dateFormat="Y-m-dTH:i"
+          altFormat="F j, Y H:i"
+          placeholder="Not set"
+        />
+      </td>
+      <td>
+        <input
+          class="form-control"
+          type="text"
+          mwlFlatpickr
+          [(ngModel)]="event.end"
+          (ngModelChange)="refresh.next()"
+          [altInput]="true"
+          [convertModelValue]="true"
+          [enableTime]="true"
+          dateFormat="Y-m-dTH:i"
+          altFormat="F j, Y H:i"
+          placeholder="Not set"
+        />
+      </td>
+      <td>
+        <button class="btn btn-danger" (click)="onRefuse(event.id)">
+          Delete
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<ng-template #modalContent let-close="close">
+  <div class="modal-header">
+    <h5 class="modal-title">Event action occurred</h5>
+    <button type="button" class="close" (click)="close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div>
+      Action:
+      <pre>{{ modalData?.action }}</pre>
+    </div>
+    <div>
+      Event:
+      <pre>{{ modalData?.event | json }}</pre>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" (click)="close()">
+      OK
+    </button>
+  </div>
+</ng-template>
+
+</div>
+
+<div class="modal fade" id="reservationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Ask fo Reservation </h5>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="reservationForm">
+          <div class="form-group">
+            <p>Your request will be sent to the owner, we will notify you once the owner respond</p>
+            <label class="text-info">Start Date</label>
+            <input type="date" class="form-control" formControlName="date_debut">
+            <label class="text-info">End Date</label>
+            <input type="date" class="form-control" formControlName="date_fin">
+            <label class="text-dark">Have a comment , a question ?</label>
+            <textarea class="form-control"></textarea>
+            <br>
+            <div style="float: right">
+              <label class="text-danger">Total Price</label>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="onSendRequest()">Send Request</button>
+      </div>
+    </div>
+  </div>
+</div>
+  </div>
+</section>

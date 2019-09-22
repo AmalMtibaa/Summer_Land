@@ -1,0 +1,13 @@
+
+@import "~igniteui-angular/lib/core/styles/themes/index";
+@include igx-core();
+$company-color: rgba(165, 165, 164, 0.95);
+$secondary-color: rgba(49, 242, 255, 0.47);
+
+$my-color-palette: igx-palette(
+  $primary: $company-color,
+  $secondary: $secondary-color
+);
+
+@include igx-theme($my-color-palette);
+

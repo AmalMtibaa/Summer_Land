@@ -1,0 +1,123 @@
+<!-- Header section -->
+<header class="header-section">
+  <div class="header-top">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 header-top-left">
+          <div class="top-info">
+            <i class="fa fa-phone"></i>
+            (+213) 74 860 807
+          </div>
+          <div class="top-info">
+            <i class="fa fa-envelope"></i>
+            contact@gmail.com
+          </div>
+        </div>
+        <div class="col-lg-6 text-lg-right header-top-right">
+          <div class="top-social">
+            <a href=""><i class="fa fa-facebook"></i></a>
+            <a href=""><i class="fa fa-twitter"></i></a>
+            <a href=""><i class="fa fa-instagram"></i></a>
+            <a href=""><i class="fa fa-pinterest"></i></a>
+            <a href=""><i class="fa fa-linkedin"></i></a>
+          </div>
+          <div class="user-panel">
+            <a *ngIf="!loged" href=""class="text-white" data-toggle="modal" data-target="#registerModal"><i class="fa fa-user-circle-o" ></i> Register</a>
+            <a *ngIf="!loged" href="" class="text-white" data-toggle="modal" data-target="#loginModal"><i class="fa fa-sign-in"></i> Login</a>
+            <a *ngIf="loged" class="text-white"><b>Welcome , {{user_name}} {{user_last_name}}</b></a>
+            <a *ngIf="loged" href="" class="text-white" (click)="onLogout()"><i class="fa fa-sign-in"></i> Logut</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="site-navbar">
+          <!--<a href="#" class="site-logo"><img src="assets/img/logo.png" alt=""></a>-->
+          <div class="nav-switch">
+            <i class="fa fa-bars"></i>
+          </div>
+          <ul class="main-menu">
+            <li><a class="nav-link" routerLink="/"> Home </a></li>
+            <li><a class="nav-link" routerLink="/houses">Houses</a></li>
+            <li><a *ngIf="loged && user_role=='owner'" class="nav-link text-white s"  (click)="onMyProperties()">My Properties</a></li>
+            <li><a *ngIf="loged" routerLink="/user-reservations">My Reservations</a></li>
+            <li><a *ngIf="loged"  routerLink="/profile">Profile</a></li>
+            <li><a routerLink="/contact">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<!-- Header section end -->
+
+
+<div class="modal fade"  data-target="#loginModal" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Login</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!--<div *ngIf="!loged && clicked" class="alert alert-danger" role="alert">-->
+          <!--Wrong Email or Password Please Try Again-->
+        <!--</div>-->
+        <form [formGroup]="loginForm">
+          <input type="email" class="form-control" placeholder="Email" formControlName="email"><br>
+          <input type="password" class="form-control" placeholder="Password" formControlName="password"><br>
+          <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+            <label class="form-check-label" for="exampleCheck1">Remember me</label>
+          </div>
+        </form>
+
+        <div class="small alert alert-secondary" role="alert">
+          Forget Password ? <label class="text-info"> Reset Password here</label>
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-success" (click)="onLogin()" >Login</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Register</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+
+          <input type="text" class="form-control" placeholder="UserName"><br>
+          <input type="password" class="form-control" placeholder="Password">
+
+        </form><br>
+        <div class="small alert alert-secondary" role="alert">
+          Forget Password ? <label class="text-info"> Reset Password here</label>
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-success">Register</button>
+      </div>
+    </div>
+  </div>
+</div>
+
