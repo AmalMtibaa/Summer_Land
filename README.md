@@ -4,8 +4,8 @@ SummerLand is a project that I worked on with two colleagues as an assignment fo
 Angular 7, Spring Boot, MySQL
 
 ## Collaborators :
-Amal MTIBAA
+Amal Mtibaa
 
-Yasmine MHIRI
+Yasmine Mhiri
 
 Med Wassim Riahi
